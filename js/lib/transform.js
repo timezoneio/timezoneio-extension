@@ -43,7 +43,8 @@ transform.teamToTimezones = function(team) {
       }
 
       return zones;
-    }, []).map(function(timezone){
+    }, [])
+    .map(function(timezone){
       timezone.people.sort(sortByNameAndId);
       return timezone;
     });
