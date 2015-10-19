@@ -98,10 +98,12 @@ export default class App extends Component {
           <div className={headerToolsClasses}>
 
             <button className="location-button material-icons md-18"
-                    onClick={this.handleClickLocation.bind(this)}>place</button>
+                    onClick={this.handleClickLocation.bind(this)}
+                    title="Update your location">place</button>
 
             <button className="search-button material-icons md-18"
                     onClick={this.handleClickSearch.bind(this)}
+                    title="Search for a teammate"
                     tabIndex="0">search</button>
 
             <input className="search-input"
