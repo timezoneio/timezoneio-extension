@@ -21,25 +21,30 @@ $rowPadding = 0.5em
 .app-body
   overflow scroll
 
+.location-button,
+.search-button
+  height $avatarSize
+  width $avatarSize
+  background #fff
+  border 1px solid $inputBorderColor
+
+
 // Search
-.search
+.app-header-tools
+  display flex
   height $avatarSize
   margin $rowPadding
 
   .search-input
     display none
 
-  &.search-show-search
+  &.is-search-active
+    .location-button,
     .search-button
       display none
+
     .search-input
       display inherit
-
-.search-button
-  height $avatarSize
-  width $avatarSize
-  background #fff
-  border 1px solid $inputBorderColor
 
 .search-input
   height $avatarSize

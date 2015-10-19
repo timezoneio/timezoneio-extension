@@ -53,6 +53,10 @@ export default class App extends Component {
       this.setState({ search: null });
   }
 
+  handleClickLocation() {
+
+  }
+
   getVisibleTimezones() {
     if (!this.state.search)
       return this.props.timezones;
@@ -62,7 +66,7 @@ export default class App extends Component {
         var filteredTimezone = Object.assign({}, timezone);
         filteredTimezone.people = timezone.people.filter(function(person) {
           return person.name &&
-                 person.name.toLowerCase().indexOf(this.state.search) > -1;
+                 person.name.search( new RegExp(this.state.search, 'i') ) > -1;
         }.bind(this));
         return filteredTimezone;
       }, this)
@@ -78,8 +82,8 @@ export default class App extends Component {
       requestChange: this.handleSearchChange.bind(this)
     };
 
-    var searchClasses = classNames('search', {
-      'search-show-search': this.isSearchActive()
+    var headerToolsClasses = classNames('app-header-tools', {
+      'is-search-active': this.isSearchActive()
     });
 
     return (
@@ -91,14 +95,21 @@ export default class App extends Component {
                        time={this.props.time}
                        fmt={this.props.fmt} />
 
-          <div className={searchClasses}>
+          <div className={headerToolsClasses}>
+
+            <button className="location-button material-icons md-18"
+                    onClick={this.handleClickLocation.bind(this)}>place</button>
+
             <button className="search-button material-icons md-18"
-                    onClick={this.handleClickSearch.bind(this)}>search</button>
+                    onClick={this.handleClickSearch.bind(this)}
+                    tabIndex="0">search</button>
+
             <input className="search-input"
                    type="search"
                    ref="search"
                    valueLink={searchLink}
                    onKeyDown={this.handleSearchKeyDown.bind(this)} />
+
           </div>
 
         </div>
