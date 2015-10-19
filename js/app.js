@@ -30,10 +30,13 @@ appData.fmt = fmt;
 
 appData.timezones = [];
 
+// For debugging and testing
+var userId = '5513998f6d1aacc66f7e7eff';
+var teamId = '5513953c6d1aacc66f7e7efe';
 
 Promise.all([
-  tzio.getUser('5513998f6d1aacc66f7e7eff'),
-  tzio.getTeam('5513953c6d1aacc66f7e7efe'),
+  tzio.getUser(userId),
+  tzio.getTeam(teamId),
 ]).then(function(values) {
   var user = values[0];
   var team = values[1];
@@ -71,7 +74,7 @@ function updateUserLocation() {
       // If no current coords, dist is NaN
       var dist = location.calculateDistance(
         lastCoords.lat, lastCoords.long,
-        newCoords.latitude, newCoords.longitude
+        newCoords.lat, newCoords.long
       );
 
       // Check if the user has moved at least 10km
@@ -84,7 +87,7 @@ function updateUserLocation() {
         ]);
       }
 
-      return [false, lastCoords, appData.user.location, appData.user.tz];
+      return [false, lastCoords, originalLocation, appData.user.tz];
     })
     .then(function(values) {
       var [didLocationChange, coords, location, tz] = values;
@@ -93,15 +96,19 @@ function updateUserLocation() {
       appData.isCurrentLocation = true;
 
       appData.user.location = location;
-      appData.user.tz = location;
+      appData.user.tz = tz;
       appData.user.coords = coords;
 
       render();
 
-      // TODO - Save via API
-      // TODO - Cache user Object
-
-      console.log(didLocationChange, coords, location, tz);
+      // Save the user via the API and update any newer data from the API
+      if (didLocationChange)
+        tzio
+          .saveUser(userId, appData.user)
+          .then(function(user) {
+            appData.user = user;
+            render();
+          });
     });
 }
 
