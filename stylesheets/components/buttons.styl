@@ -1,0 +1,34 @@
+$buttonColor = $fillColor
+$buttonRadius = 20px
+
+.button,
+button
+  display inline-block
+  padding 0.3em 1em 0.4em
+
+  background-color lighten($buttonColor, 10%)
+  border-radius $buttonRadius
+  border 0
+
+  cursor pointer
+  font-size 15px
+  line-height 1.4em
+  color $textColor
+  text-decoration none
+
+  + .button,
+  + button
+    margin-left 0.2em
+
+  &:focus
+    outline 0
+    box-shadow 0 0 2px $brandColor
+
+  // Button sizes
+  &.small
+    font-size 12px
+
+  // Button styles
+  &.material-icons
+    padding 0
+    border-radius 160px // to keep it circular

@@ -1,0 +1,28 @@
+{
+  "name": "timezoneio-extension",
+  "version": "0.1.0",
+  "description": "Quickly find what time it is where your coworkers are",
+  "main": "echo \"Error: no main specified\" && exit 1",
+  "scripts": {
+    "watch": "webpack  --debug --progress --colors --watch & stylus -w stylesheets/index.styl",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dan Farrelly <daniel.j.farrelly@gmail.com> (http://danfarrelly.nyc)",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^5.8.25",
+    "babel-loader": "^5.3.2",
+    "gulp": "^3.9.0",
+    "json-loader": "^0.5.3",
+    "webpack": "^1.12.2"
+  },
+  "dependencies": {
+    "classnames": "^2.2.0",
+    "flux": "^2.1.1",
+    "keymirror": "^0.1.1",
+    "localforage": "^1.3.0",
+    "moment-timezone": "^0.4.1",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
+  }
+}

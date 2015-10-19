@@ -1,0 +1,65 @@
+@import 'components/baseVariables'
+@import 'components/variables'
+@import 'components/fonts'
+@import 'components/icons'
+@import 'components/base'
+@import 'components/forms'
+@import 'components/buttons'
+@import 'components/avatars'
+
+$rowPadding = 0.5em
+
+.app
+  display flex
+  flex-direction column
+
+.app-header
+  display flex
+  justify-content space-between
+  background-color $lightFillColor
+
+.app-body
+  overflow scroll
+
+// Search
+.search
+  height $avatarSize
+  margin $rowPadding
+
+  .search-input
+    display none
+
+  &.search-show-search
+    .search-button
+      display none
+    .search-input
+      display inherit
+
+.search-button
+  height $avatarSize
+  width $avatarSize
+  background #fff
+  border 1px solid $inputBorderColor
+
+.search-input
+  height $avatarSize
+  width 130px
+  padding 0 "calc(%s / 3)" % $avatarSize
+
+.tz-row
+  display flex
+  align-items center
+  padding $rowPadding
+
+
+.tz-time
+  flex-shrink 0
+  width 90px
+  font-size 18px
+
+.tz-people
+  display flex
+  align-items center
+
+  .avatar
+    margin-right 4px
