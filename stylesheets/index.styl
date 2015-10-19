@@ -48,18 +48,25 @@ $rowPadding = 0.5em
 
 .tz-row
   display flex
-  align-items center
   padding $rowPadding
 
 
-.tz-time
+.tz-info
   flex-shrink 0
   width 90px
-  font-size 18px
+  height $avatarSize
+  line-height 1.1em
+
+  .time
+    display block
+    font-size 16px
+
+.tz-location
+  font-size 10px
+  color $mutedColor
 
 .tz-people
   display flex
-  align-items center
 
   .avatar
     margin-right 4px

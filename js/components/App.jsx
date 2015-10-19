@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import Avatar from './Avatar';
-import Time from './Time';
+import TimezoneRow from './TimezoneRow';
 
 const ESC_KEY = 27;
 
@@ -87,15 +86,11 @@ export default class App extends Component {
       <div className="app">
 
         <div className="app-header">
-          <div className="tz-row">
-            <div className="tz-time">
-              <Time time={this.props.time}
-                    fmt={this.props.fmt} />
-            </div>
-            <div className="tz-people">
-              <Avatar {...this.props.user} />
-            </div>
-          </div>
+
+          <TimezoneRow people={[this.props.user]}
+                       time={this.props.time}
+                       fmt={this.props.fmt} />
+
           <div className={searchClasses}>
             <button className="search-button material-icons md-18"
                     onClick={this.handleClickSearch.bind(this)}>search</button>
@@ -105,25 +100,15 @@ export default class App extends Component {
                    valueLink={searchLink}
                    onKeyDown={this.handleSearchKeyDown.bind(this)} />
           </div>
+
         </div>
 
         <div className="app-body">
           {this.getVisibleTimezones().map(function(timezone, idx) {
-            return (
-              <div className="tz-row"
-                   key={idx}>
-                <div className="tz-time">
-                  <Time time={this.props.time}
-                        fmt={this.props.fmt}
-                        tz={timezone.tz} />
-                </div>
-                <div className="tz-people">
-                  {timezone.people.map(function(person, idx) {
-                    return <Avatar {...person} key={idx} />
-                  })}
-                </div>
-              </div>
-            );
+            return <TimezoneRow {...timezone}
+                                key={idx}
+                                time={this.props.time}
+                                fmt={this.props.fmt} />
           }, this)}
         </div>
       </div>
