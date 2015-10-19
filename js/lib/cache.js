@@ -1,7 +1,7 @@
 import localForage from 'localforage';
 
-const ONE_HOUR = 60 * 60;
-const DEFAULT_EXPIRES_IN = ONE_HOUR;
+const HALF_HOUR = 30 * 60;
+const DEFAULT_EXPIRES_IN = HALF_HOUR;
 
 var cache = {
 
@@ -9,7 +9,7 @@ var cache = {
     return localForage
       .getItem(key)
       .then(function(recordObj) {
-        var record = recordObj[key];
+        var record = recordObj && recordObj[key];
 
         if (!record)
           return null;

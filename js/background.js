@@ -11,6 +11,9 @@ chrome.runtime.onMessage.addListener(
     var request;
 
     switch (message.resource) {
+      case 'user':
+        request = api.get('user/' + message.userId);
+        break;
       case 'team':
         request = api.get('team/' + message.teamId);
         break;

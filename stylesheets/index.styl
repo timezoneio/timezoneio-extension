@@ -28,6 +28,19 @@ $rowPadding = 0.5em
   background #fff
   border 1px solid $inputBorderColor
 
+@keyframes loadingPulsate {
+  0% { color: $brandColor }
+  100% { color: $lightFillColor }
+}
+
+.location-button
+  &.is-current-location
+    color: $brandColor
+
+  &.is-updating-location
+    border-color lighten(desaturate($brandColor, 50%), 50%)
+    animation: loadingPulsate 600ms linear alternate infinite
+
 
 // Search
 .app-header-tools

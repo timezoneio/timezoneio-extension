@@ -16,12 +16,12 @@ tzio.getResource = function(message) {
   });
 };
 
-tzio.getUser = function(userId) {
+tzio.getUser = function(userId, force) {
   var cacheKey = 'user';
   return cache
     .get(cacheKey)
     .then(function(user) {
-      if (user)
+      if (user && !force)
         return user;
 
       return this.getResource({

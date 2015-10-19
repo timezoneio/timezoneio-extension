@@ -21,7 +21,7 @@
 
   "permissions": [
     "*://timezone.io/*",
-    "location",
+    "geolocation",
     "tabs",
     "storage",
     "notifications"

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import ActionCreators from '../actions/ActionCreators';
 import TimezoneRow from './TimezoneRow';
 
 const ESC_KEY = 27;
@@ -54,7 +55,7 @@ export default class App extends Component {
   }
 
   handleClickLocation() {
-
+    ActionCreators.updateUserLocation();
   }
 
   getVisibleTimezones() {
@@ -85,6 +86,10 @@ export default class App extends Component {
     var headerToolsClasses = classNames('app-header-tools', {
       'is-search-active': this.isSearchActive()
     });
+    var locationButtonClasses = classNames('location-button material-icons md-18', {
+      'is-current-location': this.props.isCurrentLocation,
+      'is-updating-location': this.props.isCheckingLocation
+    });
 
     return (
       <div className="app">
@@ -97,7 +102,7 @@ export default class App extends Component {
 
           <div className={headerToolsClasses}>
 
-            <button className="location-button material-icons md-18"
+            <button className={locationButtonClasses}
                     onClick={this.handleClickLocation.bind(this)}
                     title="Update your location">place</button>
 
