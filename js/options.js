@@ -52,13 +52,20 @@ const onSettingChange = () => {
   }, showSaved)
 }
 
-locationPreferenceRadios.forEach((el) => {
-  el.addEventListener('change', onSettingChange)
-})
-
 loginButton.addEventListener('click', (e) => openLoginTab(res.error.url))
 window.addEventListener('focus', checkLoggedInStatus)
 
 checkLoggedInStatus()
 
+chrome.storage.sync.get({
+  preferences: {}
+}, (data) => {
+  // Add event click
+  locationPreferenceRadios.forEach((el) => {
+    el.addEventListener('change', onSettingChange)
+    if (data.preferences.locationUpdate === el.value) {
+      el.checked = true
+    }
+  })
+})
 
