@@ -24,10 +24,11 @@
   "permissions": [
     "*://timezone.io/*",
     "*://timezone.dev/*",
+    "alarms",
     "geolocation",
-    "tabs",
     "notifications",
-    "storage"
+    "storage",
+    "tabs"
   ],
 
   "icons": {

@@ -20,11 +20,11 @@ var json = function(res) {
 };
 
 var getData = function(data) {
-  if (!data) data = {};
+  const payload = Object.assign({}, data)
   if (accessToken) {
-    data.access_token = accessToken
+    payload.access_token = accessToken
   }
-  return data;
+  return payload
 };
 
 var appendQueryString = function(url, data) {
