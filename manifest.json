@@ -5,6 +5,7 @@
   "description": "Quickly find what time it is where your coworkers are",
   "version": "0.1",
   "author": "Dan Farrelly",
+  "homepage_url": "https://timezone.io",
 
   "options_page": "options.html",
 
