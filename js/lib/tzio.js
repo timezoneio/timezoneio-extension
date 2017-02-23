@@ -26,16 +26,18 @@ tzio.getUser = function(force) {
   return cache
     .get(cacheKey)
     .then(function(user) {
-      if (user && !force)
-        return user;
+      // Should/can we use the cached user?
+      if (user && !force && (user.fetchedAt - new Date() <= 60 * 1000))
+        return user
 
       return this.getResource({
         resource: 'self'
       });
     }.bind(this))
     .then(function(user) {
-      cache.set(cacheKey, user);
-      return user;
+      user.fetchedAt = new Date()
+      cache.set(cacheKey, user)
+      return user
     });
 };
 

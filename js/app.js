@@ -31,12 +31,11 @@ appData.fmt = fmt;
 
 appData.timezones = [];
 
-var teamId = '5642c51707ae23f22826b8fd';
-
 tzio.getUser()
   .then((user) => {
+    // TODO - Add team switching
     const teamId = user.teams[0]._id
-    tzio.getTeam(teamId)
+    return tzio.getTeam(teamId)
       .then((team) => {
         // Remove the user from displaying in their own team
         team.people = team.people.filter((person) => person._id !== user._id)
@@ -47,6 +46,7 @@ tzio.getUser()
         render()
       })
   })
+  .catch((err) => console.error('Error fetching data:', err))
 
 
 function updateUserLocation() {
