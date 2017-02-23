@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Timezone.io</title>
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <style>
+      body {
+        max-width: 600px;
+        width: 100%;
+        margin: 1em auto;
+      }
+      .settings-row {
+        margin: 1em 0;
+      }
+      .hidden {
+        display: none;
+      }
+      .notification {
+        padding: 0.5em 1em;
+        background-color: #efefef;
+        border-radius: 2px;
+        color: #016bbe;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Extension options</h1>
+      <h2>Login</h2>
+      <p class="js-login-status"></p>
+      <button class="js-login-button primary hidden">
+        Click to login to Timezone.io
+      </button>
+      <h2>Automatic location updating</h2>
+      <form>
+        <div class="settings-row">
+          <label>
+            <input
+              type="radio"
+              name="location-update-preference"
+              class="js-location-update-preference"
+              value="automatic" checked
+            />
+            Automatically update my location in the background (Default)
+          </label>
+        </div>
+        <div class="settings-row">
+          <label>
+            <input
+              type="radio"
+              name="location-update-preference"
+              class="js-location-update-preference"
+              value="ask"
+            />
+            Ask me to update when I change locations
+          </label>
+        </div>
+        <div class="settings-row">
+          <label>
+            <input
+              type="radio"
+              name="location-update-preference"
+              class="js-location-update-preference"
+              value="disabled"
+            />
+            I'll update my location manually
+          </label>
+        </div>
+      </form>
+      <p class="js-saved notification hidden">
+        <strong>Saved!</strong>
+      </p>
+    </div>
+    <script src="js/options.js"></script>
+  </body>
+</html>

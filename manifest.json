@@ -6,6 +6,8 @@
   "version": "0.1",
   "author": "Dan Farrelly",
 
+  "options_page": "options.html",
+
   "background": {
     "scripts": ["js/background-bundle.js"],
     "persistent": false
@@ -21,10 +23,11 @@
 
   "permissions": [
     "*://timezone.io/*",
+    "*://timezone.dev/*",
     "geolocation",
     "tabs",
-    "storage",
-    "notifications"
+    "notifications",
+    "storage"
   ],
 
   "icons": {

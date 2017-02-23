@@ -1,6 +1,6 @@
-var qs = require('querystring');
+import qs from 'querystring'
+import { BASE_URL } from './constants'
 
-const BASE_URL = 'http://timezone.io/api/';
 var accessToken = null;
 
 
@@ -21,7 +21,9 @@ var json = function(res) {
 
 var getData = function(data) {
   if (!data) data = {};
-  data.access_token = accessToken;
+  if (accessToken) {
+    data.access_token = accessToken
+  }
   return data;
 };
 

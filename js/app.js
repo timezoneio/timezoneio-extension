@@ -6,6 +6,7 @@ import AppDispatcher from './actions/AppDispatcher';
 import location from './lib/location';
 import tzio from './lib/tzio';
 import transform from './lib/transform';
+import { MIN_DISTANCE_TO_UPDATE } from './lib/constants'
 import App from './components/App';
 
 
@@ -30,28 +31,22 @@ appData.fmt = fmt;
 
 appData.timezones = [];
 
-// For debugging and testing
-var userId = '5513998f6d1aacc66f7e7eff';
-var teamId = '5513953c6d1aacc66f7e7efe';
+var teamId = '5642c51707ae23f22826b8fd';
 
-Promise.all([
-  tzio.getUser(userId),
-  tzio.getTeam(teamId),
-]).then(function(values) {
-  var user = values[0];
-  var team = values[1];
+tzio.getUser()
+  .then((user) => {
+    const teamId = user.teams[0]._id
+    tzio.getTeam(teamId)
+      .then((team) => {
+        // Remove the user from displaying in their own team
+        team.people = team.people.filter((person) => person._id !== user._id)
 
-  // Remove the user from displaying in their own team
-  team.people = team.people.filter(function(person) {
-    return person._id !== user._id;
-  });
+        appData.user = user
+        appData.timezones = transform.teamToTimezones(team)
 
-  appData.user = user;
-  appData.timezones = transform.teamToTimezones(team);
-
-  render();
-});
-
+        render()
+      })
+  })
 
 
 function updateUserLocation() {
@@ -77,8 +72,8 @@ function updateUserLocation() {
         newCoords.lat, newCoords.long
       );
 
-      // Check if the user has moved at least 10km
-      if (!dist || dist > 10) {
+      // Check if the user has moved min distance
+      if (!dist || dist > MIN_DISTANCE_TO_UPDATE) {
         return Promise.all([
           true,
           newCoords,

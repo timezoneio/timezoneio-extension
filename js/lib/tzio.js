@@ -21,7 +21,7 @@ tzio.putResource = function(message) {
   return this.getResource(message);
 };
 
-tzio.getUser = function(userId, force) {
+tzio.getUser = function(force) {
   var cacheKey = 'user';
   return cache
     .get(cacheKey)
@@ -30,8 +30,7 @@ tzio.getUser = function(userId, force) {
         return user;
 
       return this.getResource({
-        resource: 'user',
-        userId: userId
+        resource: 'self'
       });
     }.bind(this))
     .then(function(user) {
