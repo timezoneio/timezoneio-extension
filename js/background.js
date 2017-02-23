@@ -67,8 +67,11 @@ const getCurrentPosition = (user) => {
     .catch((err) => console.error('Could not get location:', err))
 }
 
-const isMinDistanceToUpdate = (coords1, coords2) => {
-  const distance = location.calculateDistance(coords1.lat, coords1.long, coords2.lat, coords2.long)
+const isMinDistanceToUpdate = (oldCoords, newCoords) => {
+  if (!oldCoords || !oldCoords.lat) {
+    return true
+  }
+  const distance = location.calculateDistance(oldCoords.lat, oldCoords.long, newCoords.lat, newCoords.long)
   return distance >= MIN_DISTANCE_TO_UPDATE
 }
 
