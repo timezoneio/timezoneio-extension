@@ -148,7 +148,7 @@ const displayAutomaticSaveLocationNotification = (city) => {
     type: 'basic',
     iconUrl: 'images/icons/256.png',
     title: `Welcome to ${city}!`,
-    message: `Your team will be able to see this the next time they user Timezone.io`,
+    message: `Your team will be able to see this the next time they use Timezone.io`,
   }, (notificationId) => {
     BUTTON_CALLBACKS[notificationId] = (buttonIdx) => chrome.notifications.clear(notificationId)
   })
