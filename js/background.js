@@ -22,6 +22,9 @@ const lastPosition = {
 }
 let lastLocationCheck = null
 
+const printDate = () => `[${new Date().toLocaleString()}]`
+const log = (...args) => console.log(printDate(), ...args)
+const logError = (...args) => console.error(printDate(), ...args)
 
 // TODO - Add auth flow w/ API key
 const getUserAccessToken = () => {
@@ -37,7 +40,7 @@ const getUserAccessToken = () => {
             chrome.storage.sync.set({ accessToken: res.token }, resolve)
           })
           .catch(err => {
-            console.error('Error getting access token: ', err)
+            logError('Error getting access token: ', err)
             reject()
           })
       }
@@ -49,6 +52,7 @@ const getUserData = () => {
   return api.get('self').then(res => {
     user = res
     userDataLastUpdated = new Date()
+    log('Updated user data via API')
     return user
   })
 }
@@ -62,9 +66,10 @@ const getCurrentPosition = (user) => {
     .then((position) => {
       lastPosition.coords.lat = position.latitude;
       lastPosition.coords.long = position.longitude;
+      log('Grabbed current position coordinates')
       return { user, coords: lastPosition.coords }
     })
-    .catch((err) => console.error('Could not get location:', err))
+    .catch((err) => logError('Could not get location:', err))
 }
 
 const isMinDistanceToUpdate = (oldCoords, newCoords) => {
@@ -76,15 +81,15 @@ const isMinDistanceToUpdate = (oldCoords, newCoords) => {
 }
 
 const saveNewUserLocation = () => {
-  console.log('Saving new location!', lastPosition)
+  log('Saving new location!', lastPosition)
   return api.put(`user/${user._id}`, lastPosition)
     .then(res => {
       // Update local user data
       user = res
-      console.log('New user location saved!', user)
+      log('New user location saved!', user)
       return user
     })
-    .catch(err => console.error('Failed to save new user location'))
+    .catch(err => logError('Failed to save new user location'))
 }
 
 const BUTTON_CALLBACKS = {};
@@ -164,12 +169,12 @@ const processNewUserLocation = ({ user, coords }) => {
   registerForPeriodicUpdates()
 
   if (preferences.locationUpdate === 'disabled') {
-    console.log('User chooses to update location manually')
+    log('User chooses to update location manually')
     return
   }
 
   if (!isMinDistanceToUpdate(user.coords, coords)) {
-    console.log('No need to update location')
+    log('No need to update location')
     return
   }
 
@@ -181,7 +186,7 @@ const processNewUserLocation = ({ user, coords }) => {
     .then(([ city, tz ]) => {
       lastPosition.location = city
       lastPosition.tz = tz
-      console.log(`User is now in ${city} (${tz})`)
+      log(`User is now in ${city} (${tz})`)
 
       if (preferences.locationUpdate === 'ask') {
         return displaySaveLocationNotification(user, city)
@@ -190,7 +195,7 @@ const processNewUserLocation = ({ user, coords }) => {
       // default is automatic
       return saveNewUserLocation()
         .then(() => displayAutomaticSaveLocationNotification(city))
-        .catch((err) => console.error(err))
+        .catch((err) => logError(err))
     })
 }
 
@@ -198,11 +203,11 @@ const checkUserAndLocationForUpdate = () => {
   getUserData()
     .then(getCurrentPosition)
     .then(processNewUserLocation)
-    .catch((err) => console.error(err))
+    .catch((err) => logError(err))
 }
 
 const runPeriodicLocationUpdate = () => {
-  console.log(PERIODIC_MSG)
+  log(PERIODIC_MSG)
   // Update user data every 24 hours
   const twentyFourHoursAgo = new Date() - 24 * 60 * 60 * 1000
   if (userDataLastUpdated < twentyFourHoursAgo) {
@@ -210,7 +215,7 @@ const runPeriodicLocationUpdate = () => {
   } else {
     getCurrentPosition(user)
       .then(processNewUserLocation)
-      .catch((err) => console.error(err))
+      .catch((err) => logError(err))
   }
 }
 
@@ -255,7 +260,7 @@ chrome.storage.sync.get({
   preferences: {}
 }, (data) => {
   preferences = data.preferences
-  console.log(`User location update preference set to ${preferences.locationUpdate}`)
+  log(`User location update preference set to ${preferences.locationUpdate}`)
   initializeApp()
 })
 
